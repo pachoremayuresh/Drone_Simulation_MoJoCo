@@ -21,13 +21,13 @@ class PDController:
     
     pass
 
-m = mujoco.MjModel.from_xml_path("bitcraze_crazyflie_2/scene.xml")
+m = mujoco.MjModel.from_xml_path("Example_1_Hovering_Drone/bitcraze_crazyflie_2/scene.xml")
 d = mujoco.MjData(m)
 print(d.ctrl[:1])
 d.ctrl[:1] = 4 # Set the thruster values to 0.5
 
 kp = 0.5 # Proportional gain
-kd = 0.1 # Derivative gain
+kd = 0.05 # Derivative gain
 setpoint = 0 # Vertical Speed should be 0
 
 pd_controller = PDController(kp, kd, setpoint)
