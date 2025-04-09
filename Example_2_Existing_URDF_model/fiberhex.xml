@@ -1,0 +1,74 @@
+<mujoco model="fiberthex">
+    <option timestep = "0.002" gravity = "0 0 -9.81" wind="0 0 0" magnetic="0 0 0" density = "0" viscosity="0" integrator="Euler">
+        <flag gravity="true" wind="false" magnetic="false" inertiafromgeom="false" meshcollision="false" meshvisual="false"/>
+    </option>
+    <compiler autolimits="true" boundmass = "0" boundinertia = "0" settotalmass = "-1" balanceinertia = "false" strippath = "false" angle ="radian" eulerseq = "XYZ" assetdir = "assests">
+        <lengthrange timesetp = "0.002"/>
+    </compiler>
+    <size/>
+    <statistic/>
+    <assets>
+        <mesh name="Main_Body" class="visual" file="assets/fiberhex_main_body.obj.stl" scale="0.001 0.001 0.001"/>
+        <texture name="Main_Body_Texture" type="2d" file="assets/image.png"/>
+        <material name="Main_Body_Material" class="visual" texture="Main_Body_Texture" texrepeat="1 1" texuniform="true" shininess="0.5" reflectance="0" metallic ="0" roughness="1" rgba="0.8 0.8 0.8 1">
+            <layer texture="Main_Body_Texture" role="rgb"/>
+        </material>
+    </assets>
+    <worldbody name="world" pos="0 0 0" euler="0 0 0">
+        <body name="Main_Body" pos="0 0 0" euler="0 0 0">
+            <inertial pos="0 0 0" euler="0 0 0" mass="0.5" diaginertia="0.1 0.1 0.1"/>
+            <joint name="joint_1" class="free" pos="0 0 0" euler="0 0 0"/>
+            <freejoint name="freejoint" align="auto"/>
+            <geom name="Main_Body_Geom" class="visual" type="[plane, hfield, sphere, capsule, ellipsoid, cylinder, box, mesh, sdf]" size="0 0 0" material="Main_Body_Material" rgba="0 0 0 0" mass="0" pos="0 0 0" euler="0 0 0" mesh="Mainbody"/>
+            <site/>
+            <camera/>
+            <light/>
+            <composite>
+                <joint/>
+                <geom/>
+                <site/>
+                <skin/>
+            </composite>
+            <flexcomp>
+                <contact/>
+                <edge/>
+                <elasticity/>
+                <pin/>
+            </flexcomp>
+            <plugin/>
+            <attach/>
+            <frame/>
+            <contact>
+                <pair/>
+                <exclude/>
+            </contact>
+            <actuator>
+                <general/>
+                <motor/>
+                <position/>
+                <velocity/>
+                <intvelocity/>
+                <damper/>
+                <cylinder/>
+                <muscle/>
+                <adhesion/>
+                <plugin/>
+            </actuator>
+            <sensor>
+                <gyro/>
+            </sensor>
+            <visual>
+                <global/>
+                <scale/>
+            </visual>
+            <default>
+                <mesh/>
+            </default>
+            <custom>
+                <numeric/>
+                <text/>
+            </custom>
+            <extension/>
+        </body>
+
+    </worldbody>
