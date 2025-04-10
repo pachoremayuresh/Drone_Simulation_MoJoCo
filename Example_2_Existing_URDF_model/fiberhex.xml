@@ -1,74 +1,93 @@
 <mujoco model="fiberthex">
-    <option timestep = "0.002" gravity = "0 0 -9.81" wind="0 0 0" magnetic="0 0 0" density = "0" viscosity="0" integrator="Euler">
-        <flag gravity="true" wind="false" magnetic="false" inertiafromgeom="false" meshcollision="false" meshvisual="false"/>
-    </option>
-    <compiler autolimits="true" boundmass = "0" boundinertia = "0" settotalmass = "-1" balanceinertia = "false" strippath = "false" angle ="radian" eulerseq = "XYZ" assetdir = "assests">
-        <lengthrange timesetp = "0.002"/>
-    </compiler>
-    <size/>
-    <statistic/>
-    <assets>
-        <mesh name="Main_Body" class="visual" file="assets/fiberhex_main_body.obj.stl" scale="0.001 0.001 0.001"/>
-        <texture name="Main_Body_Texture" type="2d" file="assets/image.png"/>
-        <material name="Main_Body_Material" class="visual" texture="Main_Body_Texture" texrepeat="1 1" texuniform="true" shininess="0.5" reflectance="0" metallic ="0" roughness="1" rgba="0.8 0.8 0.8 1">
-            <layer texture="Main_Body_Texture" role="rgb"/>
-        </material>
-    </assets>
-    <worldbody name="world" pos="0 0 0" euler="0 0 0">
-        <body name="Main_Body" pos="0 0 0" euler="0 0 0">
-            <inertial pos="0 0 0" euler="0 0 0" mass="0.5" diaginertia="0.1 0.1 0.1"/>
-            <joint name="joint_1" class="free" pos="0 0 0" euler="0 0 0"/>
-            <freejoint name="freejoint" align="auto"/>
-            <geom name="Main_Body_Geom" class="visual" type="[plane, hfield, sphere, capsule, ellipsoid, cylinder, box, mesh, sdf]" size="0 0 0" material="Main_Body_Material" rgba="0 0 0 0" mass="0" pos="0 0 0" euler="0 0 0" mesh="Mainbody"/>
-            <site/>
-            <camera/>
-            <light/>
-            <composite>
-                <joint/>
-                <geom/>
-                <site/>
-                <skin/>
-            </composite>
-            <flexcomp>
-                <contact/>
-                <edge/>
-                <elasticity/>
-                <pin/>
-            </flexcomp>
-            <plugin/>
-            <attach/>
-            <frame/>
-            <contact>
-                <pair/>
-                <exclude/>
-            </contact>
-            <actuator>
-                <general/>
-                <motor/>
-                <position/>
-                <velocity/>
-                <intvelocity/>
-                <damper/>
-                <cylinder/>
-                <muscle/>
-                <adhesion/>
-                <plugin/>
-            </actuator>
-            <sensor>
-                <gyro/>
-            </sensor>
-            <visual>
-                <global/>
-                <scale/>
-            </visual>
-            <default>
-                <mesh/>
-            </default>
-            <custom>
-                <numeric/>
-                <text/>
-            </custom>
-            <extension/>
-        </body>
+    <option timestep = "0.002" gravity = "0 0 -9.81" density = "1.225" 
+        viscosity="1.8e-5" integrator="RK4"/>
+    <compiler autolimits="true" angle ="radian" eulerseq = "XYZ" 
+        assetdir = "fiberthex/assests"/>
 
+    <default>
+        <default class = "fiberthex">
+            <geom mass = "2.0"/>
+            <mesh scale="0.001 0.001 0.001"/>
+            <default class="base_link">
+                <default class="visual">
+                    <geom type="mesh"/>
+                </default>
+                <default class="collision">
+                    <geom type="mesh"/>
+                </default>
+            </default>
+            <default class="rotor">
+                <geom type="mesh">
+            </default>
+            <default class="arm">
+                <geom type="cylinder" size="0.01 0.3475"/>
+                <default class="visual1">
+                    <geom type="cylinder"/>
+                </default>
+                <default class="collision1">
+                    <geom type="cylinder"/>
+                </default>
+            </default>
+        </default>
+    </default>
+
+    <assets>
+        <material name="Grey" rgba="0.5 0.5 0.5 1"/>
+        <material name="Black" rgba="0 0 0 1"/>
+        <material name="White" rgba="1 1 1 1"/>
+
+        <mesh class="base_link" name="Base_Link" file="base.obj"/>
+        <mesh class="rotor" name="Rotor" file="prop.obj"/>
+    
+    </assets>
+
+    <worldbody>
+        <light name ="spotlight" mode="targetbodycom" target="fiberthex" pos="0 -1 2"/>
+        <body name="Main_Body" pos="0 0 0" euler="0 0 0" childclass= "fiberthex">
+            <freejoint/>
+            <inertial pos="0 0 0" euler="0 0 0" mass="2" diaginertia="0.06185585085 0.46467853407 0.47162119244"/>
+            <camera name="track" pos="-1 0 .5" xyaxes="0 -1 0 1 0 2" mode="trackcom"/>
+
+            <geom material="Grey" type="mesh" mesh="Base_Link" class="visual" pos="0 0 0" euler="0 0 0"/>
+            <geom class="collision" type="mesh" mesh="Base_Link" pos="0 0 0" euler="0 0 0"/>
+            <geom material="Black" name="rotor1" class="visual" type="mesh" mesh="Rotor" pos="0.38998 0 0" euler="-0.34906585 0 0"/>
+            <geom material="Black" name="rotor2" class="visual" type="mesh" mesh="Rotor" pos="0.195 0.3377 0" euler="-0.34906585 0 1.0472"/>
+            <geom material="Black" name="rotor3" class="visual" type="mesh" mesh="Rotor" pos="-0.195 0.3377 0" euler="0.34906585 0 2.0944"/>
+            <geom material="Black" name="rotor4" class="visual" type="mesh" mesh="Rotor" pos="-0.38998 0 0" euler="0.34906585 0 0"/>
+            <geom material="Black" name="rotor5" class="visual" type="mesh" mesh="Rotor" pos="-0.195 -0.3377 0" euler="-0.34906585 0 1.0472"/>
+            <geom material="Black" name="rotor6" class="visual" type="mesh" mesh="Rotor" pos="0.195 -0.3377 0" euler="0.34906585 0 2.0944"/>
+            <geom name="rotor1" class="collision" type="mesh" mesh="Rotor" pos="0.38998 0 0" euler="-0.34906585 0 0"/>
+            <geom name="rotor2" class="collision" type="mesh" mesh="Rotor" pos="0.195 0.3377 0" euler="-0.34906585 0 1.0472"/>
+            <geom name="rotor3" class="collision" type="mesh" mesh="Rotor" pos="-0.195 0.3377 0" euler="0.34906585 0 2.0944"/>
+            <geom name="rotor4" class="collision" type="mesh" mesh="Rotor" pos="-0.38998 0 0" euler="0.34906585 0 0"/>
+            <geom name="rotor5" class="collision" type="mesh" mesh="Rotor" pos="-0.195 -0.3377 0" euler="-0.34906585 0 1.0472"/>
+            <geom name="rotor6" class="collision" type="mesh" mesh="Rotor" pos="0.195 -0.3377 0" euler="0.34906585 0 2.0944"/>
+            
+            <geom material="white" name="arm" class="visual1" type="cylinder" size="0.01 0.3475" pos="0.60188765563 -0.3475 0.0" euler="-2.61799 1.5708 0"/>
+            <geom name="arm" class="collision1" type="cylinder" size="0.01 0.3475" pos="0.60188765563 -0.3475 0.0" euler="-2.61799 1.5708 0"/>
+            
+            
+            <site name="imu"/>
+            <site name="actuation"/>
+        </body>
     </worldbody>
+            
+    <actuator>
+        <motor class="fiberthex" ctrlrange="-1 1" gear="1 0 0 0 0 0" site="actuation" name="x_force"/>
+        <motor class="fiberthex" ctrlrange="-1 1" gear="0 1 0 0 0 0" site="actuation" name="y_force"/>
+        <motor class="fiberthex" ctrlrange="-1 1" gear="0 0 1 0 0 0" site="actuation" name="z_force"/>
+        <motor class="fiberthex" ctrlrange="-1 1" gear="0 0 0 1 0 0" site="actuation" name="x_moment"/>
+        <motor class="fiberthex" ctrlrange="-1 1" gear="0 0 0 0 1 0" site="actuation" name="y_moment"/>
+        <motor class="fiberthex" ctrlrange="-1 1" gear="0 0 0 0 0 1" site="actuation" name="z_moment"/>
+    </actuator>
+
+    <sensor>
+        <gyro name="body_gyro" site="imu"/>
+        <accelerometer name="body_linacc" site="imu"/>
+        <framequat name="body_quat" objtype="site" objname="imu"/>
+    </sensor>
+
+    <keyframe>
+        <key name="hover" qpos="0 0 1 1 0 0 0" ctrl="0 0 0.25 0 0 0"/>
+    </keyframe>
+</mujoco>
