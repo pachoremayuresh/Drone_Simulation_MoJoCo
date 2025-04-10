@@ -2,7 +2,7 @@
     <option timestep = "0.002" gravity = "0 0 -9.81" density = "1.225" 
         viscosity="1.8e-5" integrator="RK4"/>
     <compiler autolimits="true" angle ="radian" eulerseq = "XYZ" 
-        assetdir = "fiberthex/assests"/>
+        assetdir = "assests"/>
 
     <default>
         <default class = "fiberthex">
