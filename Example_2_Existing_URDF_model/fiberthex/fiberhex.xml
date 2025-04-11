@@ -1,37 +1,35 @@
-<mujoco model="fiberthex">
+
+<mujoco model="fiberhex">
     <option timestep = "0.002" gravity = "0 0 -9.81" density = "1.225" 
         viscosity="1.8e-5" integrator="RK4"/>
     <compiler autolimits="true" angle ="radian" eulerseq = "XYZ" 
         assetdir = "assests"/>
 
     <default>
-        <default class = "fiberthex">
-            <geom mass = "2.0"/>
+        <default class="base_link">
+            <geom mass="2.0"/>
             <mesh scale="0.001 0.001 0.001"/>
-            <default class="base_link">
-                <default class="visual">
-                    <geom type="mesh"/>
-                </default>
-                <default class="collision">
-                    <geom type="mesh"/>
-                </default>
+            <default class="visual">
+                <geom type="mesh"/>
             </default>
-            <default class="rotor">
-                <geom type="mesh">
+            <default class="collision">
+                <geom type="mesh"/>
             </default>
-            <default class="arm">
-                <geom type="cylinder" size="0.01 0.3475"/>
-                <default class="visual1">
-                    <geom type="cylinder"/>
-                </default>
-                <default class="collision1">
-                    <geom type="cylinder"/>
-                </default>
+        </default>
+        <default class="rotor">
+            <geom type="mesh"/>
+        </default>
+        <default class="arm">
+            <default class="visual1">
+                <geom type="cylinder"/>
+            </default>
+            <default class="collision1">
+                <geom type="cylinder"/>
             </default>
         </default>
     </default>
 
-    <assets>
+    <asset>
         <material name="Grey" rgba="0.5 0.5 0.5 1"/>
         <material name="Black" rgba="0 0 0 1"/>
         <material name="White" rgba="1 1 1 1"/>
@@ -39,11 +37,11 @@
         <mesh class="base_link" name="Base_Link" file="base.obj"/>
         <mesh class="rotor" name="Rotor" file="prop.obj"/>
     
-    </assets>
+    </asset>
 
     <worldbody>
-        <light name ="spotlight" mode="targetbodycom" target="fiberthex" pos="0 -1 2"/>
-        <body name="Main_Body" pos="0 0 0" euler="0 0 0" childclass= "fiberthex">
+        <light name ="spotlight" mode="fixed"pos="0 -1 2"/>
+        <body name="Main_Body" pos="0 0 0" euler="0 0 0" childclass= "base_link">
             <freejoint/>
             <inertial pos="0 0 0" euler="0 0 0" mass="2" diaginertia="0.06185585085 0.46467853407 0.47162119244"/>
             <camera name="track" pos="-1 0 .5" xyaxes="0 -1 0 1 0 2" mode="trackcom"/>
@@ -56,15 +54,15 @@
             <geom material="Black" name="rotor4" class="visual" type="mesh" mesh="Rotor" pos="-0.38998 0 0" euler="0.34906585 0 0"/>
             <geom material="Black" name="rotor5" class="visual" type="mesh" mesh="Rotor" pos="-0.195 -0.3377 0" euler="-0.34906585 0 1.0472"/>
             <geom material="Black" name="rotor6" class="visual" type="mesh" mesh="Rotor" pos="0.195 -0.3377 0" euler="0.34906585 0 2.0944"/>
-            <geom name="rotor1" class="collision" type="mesh" mesh="Rotor" pos="0.38998 0 0" euler="-0.34906585 0 0"/>
-            <geom name="rotor2" class="collision" type="mesh" mesh="Rotor" pos="0.195 0.3377 0" euler="-0.34906585 0 1.0472"/>
-            <geom name="rotor3" class="collision" type="mesh" mesh="Rotor" pos="-0.195 0.3377 0" euler="0.34906585 0 2.0944"/>
-            <geom name="rotor4" class="collision" type="mesh" mesh="Rotor" pos="-0.38998 0 0" euler="0.34906585 0 0"/>
-            <geom name="rotor5" class="collision" type="mesh" mesh="Rotor" pos="-0.195 -0.3377 0" euler="-0.34906585 0 1.0472"/>
-            <geom name="rotor6" class="collision" type="mesh" mesh="Rotor" pos="0.195 -0.3377 0" euler="0.34906585 0 2.0944"/>
+            <geom class="collision" type="mesh" mesh="Rotor" pos="0.38998 0 0" euler="-0.34906585 0 0"/>
+            <geom class="collision" type="mesh" mesh="Rotor" pos="0.195 0.3377 0" euler="-0.34906585 0 1.0472"/>
+            <geom class="collision" type="mesh" mesh="Rotor" pos="-0.195 0.3377 0" euler="0.34906585 0 2.0944"/>
+            <geom class="collision" type="mesh" mesh="Rotor" pos="-0.38998 0 0" euler="0.34906585 0 0"/>
+            <geom class="collision" type="mesh" mesh="Rotor" pos="-0.195 -0.3377 0" euler="-0.34906585 0 1.0472"/>
+            <geom class="collision" type="mesh" mesh="Rotor" pos="0.195 -0.3377 0" euler="0.34906585 0 2.0944"/>
             
-            <geom material="white" name="arm" class="visual1" type="cylinder" size="0.01 0.3475" pos="0.60188765563 -0.3475 0.0" euler="-2.61799 1.5708 0"/>
-            <geom name="arm" class="collision1" type="cylinder" size="0.01 0.3475" pos="0.60188765563 -0.3475 0.0" euler="-2.61799 1.5708 0"/>
+            <geom material="White" name="arm" class="visual1" type="cylinder" size="0.01 0.3475" pos="0.60188765563 -0.3475 0.0" euler="-2.61799 1.5708 0"/>
+            <geom class="collision1" type="cylinder" size="0.01 0.3475" pos="0.60188765563 -0.3475 0.0" euler="-2.61799 1.5708 0"/>
             
             
             <site name="imu"/>
@@ -73,12 +71,12 @@
     </worldbody>
             
     <actuator>
-        <motor class="fiberthex" ctrlrange="-1 1" gear="1 0 0 0 0 0" site="actuation" name="x_force"/>
-        <motor class="fiberthex" ctrlrange="-1 1" gear="0 1 0 0 0 0" site="actuation" name="y_force"/>
-        <motor class="fiberthex" ctrlrange="-1 1" gear="0 0 1 0 0 0" site="actuation" name="z_force"/>
-        <motor class="fiberthex" ctrlrange="-1 1" gear="0 0 0 1 0 0" site="actuation" name="x_moment"/>
-        <motor class="fiberthex" ctrlrange="-1 1" gear="0 0 0 0 1 0" site="actuation" name="y_moment"/>
-        <motor class="fiberthex" ctrlrange="-1 1" gear="0 0 0 0 0 1" site="actuation" name="z_moment"/>
+        <motor class="base_link" ctrlrange="-1 1" gear="1 0 0 0 0 0" site="actuation" name="x_force"/>
+        <motor class="base_link" ctrlrange="-1 1" gear="0 1 0 0 0 0" site="actuation" name="y_force"/>
+        <motor class="base_link" ctrlrange="-1 1" gear="0 0 1 0 0 0" site="actuation" name="z_force"/>
+        <motor class="base_link" ctrlrange="-1 1" gear="0 0 0 1 0 0" site="actuation" name="x_moment"/>
+        <motor class="base_link" ctrlrange="-1 1" gear="0 0 0 0 1 0" site="actuation" name="y_moment"/>
+        <motor class="base_link" ctrlrange="-1 1" gear="0 0 0 0 0 1" site="actuation" name="z_moment"/>
     </actuator>
 
     <sensor>
