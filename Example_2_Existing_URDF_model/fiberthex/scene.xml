@@ -1,7 +1,7 @@
 <mujoco model="physical_detection">
   <include file="FTA_drone.xml"/>
 
-  <statistic center="0 0 0.1" extent="0.2" meansize=".05"/>
+  <statistic center="0 0 0.1" extent="0.9" meansize=".05"/>
 
   <visual>
     <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>

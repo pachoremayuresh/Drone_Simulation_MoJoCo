@@ -10,6 +10,7 @@
         <material name="grey" rgba="0.4 0.4 0.4 0.5"/>
         <material name="white" rgba="1 1 1 1"/>
         <material name="black" rgba="0 0 0 1"/>
+        <material name="green" rgba="0.2 0.8 0.2 0.5"/>
 
         <mesh name="prop" file="prop.obj" scale="0.001 0.001 0.001"/>
     </asset>
@@ -24,10 +25,11 @@
             <inertial pos="0 0 0" mass="2" diaginertia="0.06185585085 0.46467853407 0.47162119244"/>
             <geom type="box" size="0.05 0.05 0.1" material="grey"/>
             <geom type="cylinder" size="0.01 0.1" pos="0 0 0.1" material="white"/>
+            <geom type="ellipsoid" size=".13 .13 .01" pos="0 0 0.175" material="green"/>
 
             <body name="prop1" pos="0 0 0.175" euler="0 0 0">
                 <joint name="prop1" type="hinge" axis="0 0 1"/>
-                <geom type="mesh" mesh="prop" material="black"/>
+                <geom type="mesh" mesh="prop" material="grey"/>
             </body>
             <!-- 
             <body name="prop2" pos="0.195 0.3377 0" euler="-0.34906585 0 1.0472">
