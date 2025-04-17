@@ -12,3 +12,4 @@ def set_initial_camera_view(viewer, model, data):
         viewer.cam.elevation = -20  # Set elevation angle
         viewer.cam.azimuth = 90  # Set azimuth angle
         pass
+

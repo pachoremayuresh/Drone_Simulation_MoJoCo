@@ -33,8 +33,9 @@ class PDController:
 
 m = mujoco.MjModel.from_xml_path("Example_2_Existing_URDF_model/fiberthex/scene.xml")
 d = mujoco.MjData(m)
-print(d.ctrl[:1])
-d.ctrl[:6] = 4 # Set the thruster values to 0.5
+
+d.ctrl[8] = 4 # Set the thruster values to 0.5
+size = d.ctrl.shape
 
 kp = 0.5 # Proportional gain
 kd = 0.1 # Derivative gain
@@ -51,10 +52,10 @@ with mujoco.viewer.launch_passive(m, d) as viewer:
 
         ###Control loop to stabilize drone height.
         measured_speed = d.qvel[2]
-        print(measured_speed)
+        #print(measured_speed)
         control_signal = pd_controller.compute(measured_speed)
-        print(control_signal)
-        d.ctrl[:6] = d.ctrl[:6] + control_signal
+        #print(control_signal)
+        d.ctrl[8] = d.ctrl[8] + control_signal
         # mj_step can be replaced with code that also evaluates
         # a policy and applies a control signal before stepping the physics.
         mujoco.mj_step(m, d)
