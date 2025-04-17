@@ -43,6 +43,9 @@
         <body name="camera_body" pos="1 1 1">
             <camera name="tracking_camera" mode="targetbodycom" target="assembly" pos="0 0 0" />
         </body>
+
+        <camera name="camera-follower" mode="trackcom" pos="1 1 2" euler="0.9 0 2.35619"/>
+
         
     </worldbody>
 
